@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        
+      # Install Node.js
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: 14.x
+      
+      # Install the dependencies
+      - name: Install dependencies
+        run: yarn
+      
+      # Run build
+      - name: Install dependencies
+        run: yarn
+        
+      # Copy dist folder to Digital ocean
+      - name: Copy dist to Digital Ocean
+        uses: appleboy/scr-action@main
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          keys: ${{ secrets.SSH_KEY }}
+          source: "dist"
+          target: "test"
+   
+   # Run build
+   # Copy dist folder to Digital Ocean
+   
+   # Replace the existing dist folder for the new code
+   # Run YARN on DO
+   # Run migrations
+   # Restart node server
